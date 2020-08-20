@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Nunito:wght@400;700&display=swap');
 .App {
   text-align: center;
 }
@@ -14,4 +14,20 @@
   font-size: 2.0em;
   color: whitesmoke;
   font-family: "Nunito";
+}
+
+
+.display-users {
+  background-color: whitesmoke;
+  margin-top: 50px;
+  border-top: 100px solid #5D00DA;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+h2 {
+  font-family: "Nunito";
+  font-size: 2.7em;
+  width: 100%;
 }

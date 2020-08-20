@@ -20,6 +20,7 @@ const initialFormErrors = {
   fname: "",
   lname: "",
   location: "",
+  email: "",
   password: "",
 };
 
@@ -101,6 +102,7 @@ function App() {
     const newUser = {
       fname: formValues.fname.trim(),
       lname: formValues.lname.trim(),
+      location: formValues.location,
       email: formValues.email.trim(),
       password: formValues.password.trim(),
     };
@@ -113,10 +115,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    formSchema.isValid(formValues).then((valid) => {
+    formSchema.isValid(formValues)
+      .then(valid => {
       setDisabled(!valid);
     });
-  });
+  }, [formValues]);
 
   return (
     <div className="App">
@@ -131,6 +134,8 @@ function App() {
         disabled={disabled}
         errors={formErrors}
       />
+      <div className="display-users">
+      <h2>Current Users</h2>
       {
         users.map(user => {
           return (
@@ -138,6 +143,7 @@ function App() {
           )
         })  
       }
+      </div>
       
     </div>
   );
