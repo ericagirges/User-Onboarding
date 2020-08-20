@@ -7,7 +7,9 @@ import axios from "axios";
 import * as yup from "yup";
 
 const initialFormValues = {
-  name: "",
+  fname: "",
+  lname: "",
+  location: "",
   email: "",
   password: "",
   // checkbox
@@ -15,8 +17,9 @@ const initialFormValues = {
 };
 
 const initialFormErrors = {
-  name: "",
-  email: "",
+  fname: "",
+  lname: "",
+  location: "",
   password: "",
 };
 
@@ -59,6 +62,7 @@ function App() {
   };
 
   const updateInput = (name, value) => {
+    console.log("name", name);
     //first validate input against requirements
     yup
       .reach(formSchema, name)
@@ -95,7 +99,8 @@ function App() {
   // upon submit
   const handleSubmit = () => {
     const newUser = {
-      name: formValues.name.trim(),
+      fname: formValues.fname.trim(),
+      lname: formValues.lname.trim(),
       email: formValues.email.trim(),
       password: formValues.password.trim(),
     };
