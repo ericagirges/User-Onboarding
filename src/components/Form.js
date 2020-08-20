@@ -218,7 +218,7 @@ const Form = (props) => {
           value={values.password}
           onChange={onUpdateInput}
           name="password"
-          type="text"
+          type="password"
         />
       </label>
 
@@ -246,7 +246,7 @@ const Form = (props) => {
         <div>{errors.password}</div>
         <div>{errors.terms}</div> 
       </div>
-      <button disable={disabled}>submit</button>
+      <button disabled={disabled}>submit</button>
       </InputFields>
     </FormStyler>
     </FormContainer>

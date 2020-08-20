@@ -24,7 +24,7 @@ const UsersDetails = styled.div `
 
     img {
         margin-top: 30px;
-        height: 100px;
+        height: 200px;
         width: auto;
     }
 
@@ -49,6 +49,7 @@ const Users = props => {
     return (
         <UsersContainer>
         <UsersDetails>
+            <img src="/avatarusers.png" alt="avatar"/>
             <h3>{details.fname} {details.lname}</h3>
             <p>Location: {details.location}</p>
             <p>Email: {details.email}</p>
