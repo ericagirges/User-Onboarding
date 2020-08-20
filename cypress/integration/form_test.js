@@ -18,7 +18,12 @@ describe("User Onboarding App", () => {
         .should("have.value", "cardib@email.com")
     })
 
-    //
+    //test typing in password in specified input
+    it("can type password in the 'text' input", () => {
+        cy.get("input[name='password']")
+        .type("kulture")
+        .should("have.value", "kulture")
+    })
 
 
     // const textInput = () => crypto.getRandomValues("input[fname='text']")
