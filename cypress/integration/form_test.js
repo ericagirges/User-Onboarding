@@ -25,6 +25,12 @@ describe("User Onboarding App", () => {
         .should("have.value", "kulture")
     })
 
+    //test terms checkbox
+    it("terms of service checkbox functional", () => {
+        cy.get("[type='checkbox']")
+        .check()
+    })
+
 
     // const textInput = () => crypto.getRandomValues("input[fname='text']")
 })
