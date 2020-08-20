@@ -1,8 +1,26 @@
 import React from "react";
+import styled from "styled-components";
 
 const Form = (props) => {
+  const { values, submit, updateInput, updateCheckbox, disabled, errors } = props
+
+  const onSubmit = event => {
+    event.preventDefault()
+    submit()
+  }
+
+  const onUpdateCheckbox = event => {
+    const { name, checked } = event.target
+    updateCheckbox(name, checked)
+  }
+
+  const onUpdateInput = event => {
+    const { name, value } = event.target
+    updateInput(name, value)
+  }
+
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h2>User Registration</h2>
 
       <h4>General Information</h4>
@@ -10,8 +28,8 @@ const Form = (props) => {
       <label>
         Name&nbsp;
         <input
-          // value={values.name}
-          // onChange={onInputChange}
+          value={values.name}
+          onChange={onUpdateInput}
           name="name"
           type="text"
         />
@@ -19,8 +37,8 @@ const Form = (props) => {
       <label>
         Email&nbsp;
         <input
-          // value={values.username}
-          // onChange={onInputChange}
+          value={values.username}
+          onChange={onUpdateInput}
           name="email"
           type="text"
         />
@@ -28,8 +46,8 @@ const Form = (props) => {
       <label>
         Password&nbsp;
         <input
-          // value={values.username}
-          // onChange={onInputChange}
+          value={values.password}
+          onChange={onUpdateInput}
           name="password"
           type="text"
         />
@@ -44,15 +62,15 @@ const Form = (props) => {
         <input
           type="checkbox"
           name="terms"
-        //   checked={values.hobbies.hiking}
-        //   onChange={onCheckboxChange}
+          checked={values.terms}
+          onChange={onUpdateCheckbox}
         />
       </label>
       <div className="errors">
-        {/* <div>{errors.name}</div>
+        <div>{errors.name}</div>
         <div>{errors.email}</div>
         <div>{errors.password}</div>
-        <div>{errors.terms}</div>  */}
+        <div>{errors.terms}</div> 
       </div>
       <button>submit</button>
     </form>

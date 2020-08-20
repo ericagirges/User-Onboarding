@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import Form from "./Form";
+import Users from "./Users";
 import formSchema from "./validation/formSchema";
 import axios from "axios";
 import * as yup from "yup";
@@ -11,41 +12,128 @@ const initialFormValues = {
   password: "",
   // checkbox
   terms: false,
-}
+};
 
 const initialFormErrors = {
   name: "",
   email: "",
   password: "",
-}
+};
 
-const initialUsers = []
-
+const initialUsers = [];
+const disableButton = true;
 
 function App() {
-  const [ users, setUsers ] = useState(initialUsers)
-  const [ formValues, setFormvalues ] = useState(initialFormValues)
-  const [ formErrors, setFormErrors ] = useState(initialFormErrors)
+  const [users, setUsers] = useState(initialUsers);
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(disableButton);
 
-  // Post new user data to API
-  const postNewUsers = () => {
-    axios.post("https://reqres.in/api/users")
-      .then(response => {
-        setUsers(response.data)
+  //put users in state
+  const getUsers = () => {
+    axios
+      .get("https://reqres.in/api/users")
+      .then((response) => {
+        console.log(response)
+        // setUsers(response.data);
       })
-      .catch(error => {
-        alert("User could not be added at this time")
+      .catch((error) => {
+        console.log("error", error)
+        alert("Fetch users request failed.");
+      });
+  };
+
+  // function to post new user data to API
+  const postNewUsers = user => {
+    axios
+      .post("https://reqres.in/api/users", user)
+      .then((response) => {
+        setUsers([...users, response.data])
+      })
+      .catch((error) => {
+        alert("User could not be added at this time");
       })
       .finally(() => {
-        setFormvalues(initialFormValues)
+        setFormValues(initialFormValues);
+      });
+  };
+
+  const updateInput = (name, value) => {
+    //first validate input against requirements
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      // successful = remove error message
+      .then((valid) => {
+        setFormErrors({
+          ...formErrors,
+          [name]: "",
+        });
       })
-  }
+      // unsuccessful = display error message by corresponding value
+      .catch((err) => {
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0],
+        });
+      });
+    // update user values
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
+
+  // function to update terms checkbox
+  const updateCheckbox = (name, isChecked) => {
+    setFormValues({
+      ...formValues,
+      [name]: isChecked,
+    });
+  };
+
+  // upon submit
+  const handleSubmit = () => {
+    const newUser = {
+      name: formValues.name.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password.trim(),
+    };
+    //post new user data
+    postNewUsers(newUser);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    formSchema.isValid(formValues).then((valid) => {
+      setDisabled(!valid);
+    });
+  });
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Getting Started</h1>
       </header>
-      <Form />
+      <Form
+        values={formValues}
+        updateInput={updateInput}
+        updateCheckbox={updateCheckbox}
+        submit={handleSubmit}
+        disabled={disabled}
+        errors={formErrors}
+      />
+      {
+        users.map(user => {
+          return (
+            <Users key={user.id} details={user}/>
+          )
+        })  
+      }
+      
     </div>
   );
 }
