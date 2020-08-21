@@ -116,7 +116,7 @@ function App() {
 
   useEffect(() => {
     formSchema.isValid(formValues)
-      .then(valid => {
+      .then((valid) => {
       setDisabled(!valid);
     });
   }, [formValues]);

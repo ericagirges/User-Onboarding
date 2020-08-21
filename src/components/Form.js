@@ -209,7 +209,7 @@ const Form = (props) => {
           value={values.username}
           onChange={onUpdateInput}
           name="email"
-          type="text"
+          type="email"
         />
       </label>
       <label>
